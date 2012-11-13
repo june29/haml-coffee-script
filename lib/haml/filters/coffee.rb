@@ -8,7 +8,8 @@ module Haml
       lazy_require 'coffee-script'
 
       def compile(compiler, text)
-        rendered = CoffeeScript.compile(text)
+        compiled = CoffeeScript.compile(text)
+        rendered = "<script>\n//<![CDATA[\n#{compiled}\n//]]>\n</script>"
         compiler.instance_eval do
           push_text(options[:ugly] ?
                     rendered.rstrip :
